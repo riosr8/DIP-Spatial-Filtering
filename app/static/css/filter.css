@@ -1,3 +1,8 @@
+.nav-sidebar {
+  margin-bottom: 20px;
+  margin-left: -15px;
+}
+
 .nav li {
   border-bottom: 3px solid rgba(0, 0, 0, 0);
 }
