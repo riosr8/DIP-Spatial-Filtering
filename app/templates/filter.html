@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/filter.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    {% for file_name in file_urls %}
+                        {% if file_urls[file_name] == selected_image_url %}
+                            <li class="active"><a href="{{ url_for('filter_image', img_name=file_name) }}">{{ file_name }}</a></li>
+                        {% else %}
+                            <li><a href="{{ url_for('filter_image', img_name=file_name) }}">{{ file_name }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-md-offset-2 main">
+                <h1 class="page-header">Apply a filter</h1>
+                <a href="{{ url_for('upload') }}">Back</a>
+                <ul>
+                    <div class="row">
+                        <div class="col-xs-6 col-md-6 col-lg-6">
+                            <h3 class="text-center">Original</h3>
+                            <a href="#"><img src="{{ selected_image_url }}" class="img-responsive"></a>
+                        </div>
+                        <div class="col-xs-6 col-md-6 col-lg-6">
+                            <h3 class="text-center">Filtered</h3>
+                            <a href="#"><img src="{{ selected_image_url }}" class="img-responsive"></a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
