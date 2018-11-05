@@ -49,8 +49,8 @@ def filter_image(img_name):
     if "file_urls" not in session:
         return redirect(url_for('upload'))
 
-    # file_urls = session['file_urls']
-    session['selected_image_url'] = photos.url(ntpath.basename(request.path))
+    if img_name is not None:
+        session['selected_image_url'] = photos.url(ntpath.basename(request.path))
     # session.pop('file_urls', None)
 
     return render_template('filter.html', file_urls=session['file_urls'], selected_image_url=session['selected_image_url'])
