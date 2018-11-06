@@ -1,10 +1,13 @@
-from flask import render_template, flash, redirect, url_for, request, session
+from flask import render_template, flash, redirect, url_for, request, session, json, make_response
 from app import app
 from flask_dropzone import Dropzone
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 import os
 import ntpath
-
+import cv2
+import base64
+from datetime import datetime
+import numpy as np
 
 dropzone = Dropzone(app)
 # Uploads settings
@@ -12,6 +15,7 @@ app.config['UPLOADED_PHOTOS_DEST'] = os.getcwd() + '/uploads'
 photos = UploadSet('photos', IMAGES)
 configure_uploads(app, photos)
 patch_request_class(app)  # set maximum file size, default is 16MB
+
 
 @app.route('/', methods=['POST', 'GET'])
 def upload():
@@ -40,8 +44,8 @@ def upload():
     return render_template('index.html')
 
 
-@app.route('/filter', defaults={'img_name': None})
-@app.route('/filter/<img_name>')
+@app.route('/filter', defaults={'img_name': None}, methods=['POST', 'GET'])
+@app.route('/filter/<img_name>', methods=['POST', 'GET'])
 def filter_image(img_name):
     print(img_name)
     print(photos.url(ntpath.basename(request.path)))
@@ -51,6 +55,25 @@ def filter_image(img_name):
 
     if img_name is not None:
         session['selected_image_url'] = photos.url(ntpath.basename(request.path))
-    # session.pop('file_urls', None)
 
-    return render_template('filter.html', file_urls=session['file_urls'], selected_image_url=session['selected_image_url'])
+    return render_template('filter.html', file_urls=session['file_urls'],
+                           selected_image_url=session['selected_image_url'])
+
+
+@app.route('/processImage', methods=['POST'])
+def processImage():
+    print(request.form)
+    selected_filter = request.form['filters']
+    img_to_filter = ntpath.basename(request.form['original'])
+    img_name = img_to_filter.split(".")[0]
+    img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
+
+    # just a random image for proof of concept
+    test_img = np.zeros(img.shape)
+    print(test_img)
+    retval, buffer = cv2.imencode('.jpg', test_img)
+    png_as_text = base64.b64encode(buffer)
+    response = make_response(png_as_text)
+    response.headers['Content-Type'] = 'image/jpg'
+
+    return response
