@@ -23,20 +23,20 @@
             </div>
             <div class="col-md-offset-2 main">
                 <h1 class="page-header">Apply a filter</h1>
-                <form>
+                <form method="POST" role="form">
                     <ul>
                         <div class="row">
                             <div class="col-xs-6 col-md-6 col-lg-6">
                                 <h3>Original</h3>
-                                <input type="image" name="original" src="{{ selected_image_url }}"
-                                       class="img-responsive"/>
-                                {#                            <a href="#"><img src="{{ selected_image_url }}" class="img-responsive"></a>#}
+                                <input type="radio" name="original" checked value="{{ selected_image_url }}"/>
+                                <label for="original_img"><img id="original_img" src="{{ selected_image_url }}"
+                                                               class="img-responsive"/></label>
                             </div>
                             <div class="col-xs-6 col-md-6 col-lg-6">
                                 <h3>Filtered</h3>
-                                <input type="image" name="filtered" src="{{ selected_image_url }}"
-                                       class="img-responsive"/>
-                                {#                            <a href="#"><img src="{{ selected_image_url }}" class="img-responsive"></a>#}
+                                <input type="radio" name="filtered"/>
+                                <label for="filtered_img"><img id="filtered_img_res" src="{{ selected_image_url }}"
+                                                               class="img-responsive"/></label>
                             </div>
                         </div>
                     </ul>
