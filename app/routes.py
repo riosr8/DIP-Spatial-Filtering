@@ -8,6 +8,7 @@ import cv2
 import base64
 from datetime import datetime
 import numpy as np
+from app.Filtering import Filtering
 
 dropzone = Dropzone(app)
 # Uploads settings
@@ -65,15 +66,20 @@ def processImage():
     print(request.form)
     selected_filter = request.form['filters']
     img_to_filter = ntpath.basename(request.form['original'])
-    img_name = img_to_filter.split(".")[0]
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
 
-    # just a random image for proof of concept
-    test_img = np.zeros(img.shape)
-    print(test_img)
-    retval, buffer = cv2.imencode('.jpg', test_img)
+    # just a random image filter for proof of concept
+    mask = 'ideal_l'
+    cutoff_f = float(50)
+    Filter_obj = Filtering(img, mask, cutoff_f)
+    output = Filter_obj.filtering()
+    print(output[0])
+
+    # prep the filtered image to be sent back as the response
+    retval, buffer = cv2.imencode('.jpg', output[0])
     png_as_text = base64.b64encode(buffer)
     response = make_response(png_as_text)
     response.headers['Content-Type'] = 'image/jpg'
 
     return response
+
