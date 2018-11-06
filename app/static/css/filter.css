@@ -1,15 +1,25 @@
 .nav-sidebar {
-  margin-bottom: 20px;
-  margin-left: -15px;
+    margin-bottom: 20px;
+    margin-left: -15px;
 }
 
 .nav li {
-  border-bottom: 3px solid rgba(0, 0, 0, 0);
+    border-bottom: 3px solid rgba(0, 0, 0, 0);
 }
+
 .nav li:hover {
-  border-bottom: 3px solid #eee;
+    border-bottom: 3px solid #eee;
 }
+
 .nav li.active {
-  border-bottom: 3px solid #338ecf;
-  background: #eee
+    border-bottom: 3px solid #338ecf;
+    background: #eee
+}
+
+input[type="radio"] {
+    display: none
+}
+
+input[type="radio"] + label span {
+    display: block
 }
