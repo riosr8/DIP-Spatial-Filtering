@@ -42,7 +42,7 @@ def upload():
         session['file_urls'] = file_urls
         session['selected_image_url'] = next(iter(file_urls.values()))
 
-    return render_template('index.html')
+    return render_template('index.html', file_urls=file_urls)
 
 
 @app.route('/filter', defaults={'img_name': None}, methods=['POST', 'GET'])
@@ -57,8 +57,7 @@ def filter_image(img_name):
     if img_name is not None:
         session['selected_image_url'] = photos.url(ntpath.basename(request.path))
 
-    return render_template('filter.html', file_urls=session['file_urls'],
-                           selected_image_url=session['selected_image_url'])
+    return render_template('filter.html', file_urls=session['file_urls'], selected_image_url=session['selected_image_url'])
 
 
 @app.route('/processImage', methods=['POST'])
