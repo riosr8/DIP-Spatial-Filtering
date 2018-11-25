@@ -3,6 +3,7 @@
     {{ super() }}
     {{ dropzone.load_css() }}
     {{ dropzone.style('border: 2px dashed #0087F7; margin: 10%; min-height: 400px;') }}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/index.css') }}">
 {% endblock %}
 {% block content %}
 
@@ -12,5 +13,14 @@
         {{ dropzone.load_js() }}
         {{ dropzone.config() }}
     </div>
+    {% if file_urls %}
+    <div class="row">
+        <div class="col-xs-4 col-md-4 col-lg-4"></div>
+        <div class="col-xs-4 col-md-4 col-lg-4">
+            <a href="{{ url_for('filter_image') }}"<button id="view_existing" class="btn btn-primary btn-block" type="button">View Existing Images</button></a>
+        </div>
+        <div class="col-xs-4 col-md-4 col-lg-4"></div>
+    </div>
+    {% endif %}
 
 {% endblock %}
