@@ -40,21 +40,51 @@
                 </ul>
 
                 <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label for="mask_size">Mask Size</label>
+                        <input name="mask_size" type="text" class="form-control" id="mask_size" value="3">
+                    </div>
+                    <div class="col-xs-3"></div>
                     <div class="col-xs-6">
-                        <h3>Select a filter to apply below.</h3>
-                        <div class="col-xs-3">
-                            <select name="filters" class="form-control" id="filters">
-                                <option value="filter_1">Filter 1</option>
-                                <option value="filter_2">Filter 2</option>
-                                <option value="filter_3">Filter 3</option>
-                                <option value="filter_4">Filter 4</option>
-                            </select>
-                        </div>
-                        <div class="col-xs-3">
-                            <button class="btn btn-default btn-block" type="button">Apply</button>
-                        </div>
+                        <p id="current_filter">No filter selected.</p>
+                        <p id="current_mask">No mask size set.</p>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label for="k_value">Intensity Value (k)</label>
+                        <input name="k_value" type="text" class="form-control" id="k_value" value="1">
+                    </div>
+                    <div class="col-xs-3"></div>
+                    <div class="col-xs-6">
+                        <p id="current_kvalue">No k value set.</p>
+                        <p id="current_threshold">No threshold set.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label for="threshold">Threshold</label>
+                        <input name="threshold" type="text" class="form-control" id="threshold" value="1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-xs-3">
+                        <label for="filters">Filter: </label>
+                        <select name="filters" class="form-control" id="filters">
+                            <option value="filter_1">Filter 1</option>
+                            <option value="filter_2">Filter 2</option>
+                            <option value="filter_3">Filter 3</option>
+                            <option value="filter_4">Filter 4</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3">
+                        <button class="btn btn-default btn-block" type="button">Apply</button>
+                    </div>
+                </div>
+                <br />
+                <br />
             </form>
         </div>
     </div>
