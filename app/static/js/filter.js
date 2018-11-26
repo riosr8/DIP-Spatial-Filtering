@@ -18,6 +18,20 @@ $(function () {
         });
     });
 });
+$(function() {
+    $('select#filters').change(function() {
+        selection = $(this).val();
+        console.log($(this).val());
+        if($(this).val() === 'unsharp_mask'){
+            $('#k_value_row').show();
+            $('#threshold_row').show();
+        } else {
+            $('#k_value_row').hide();
+            $('#threshold_row').hide();
+        }
+    });
+});
+
 
 // $(document).ready(function () {
 //     $.ajax({
