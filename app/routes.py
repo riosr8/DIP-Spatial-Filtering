@@ -18,6 +18,8 @@ PHOTOS = UploadSet('photos', IMAGES)
 configure_uploads(app, PHOTOS)
 patch_request_class(app)  # set maximum file size, default is 16MB
 
+FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice}
+
 
 @app.route('/', methods=['POST', 'GET'])
 def upload():
@@ -74,16 +76,13 @@ def process_image():
     """
     print(request.form)
     selected_filter = request.form['filters']
+    mask_size = int(request.form['mask_size'])
+    k_value = request.form['k_value']  #verify if float or int
+    threshold = request.form['threshold'] #verify if float or int
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
-    # just a random image filter for proof of concept
-    # mask = 'ideal_l'
-    # cutoff_f = float(50)
-    # Filter_obj = Filtering(img, mask, cutoff_f)
-    # output = Filter_obj.filtering()
-    # print(output[0])
 
-    output = averaging_yourchoice(img, 6)
+    output = FILTER_DISPATCHER[selected_filter](img, mask_size)
     # print(output)
     # prep the filtered image to be sent back as the response
     # retval, buffer = cv2.imencode('.jpg', output[0])
