@@ -11,6 +11,7 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_cl
 from app import app
 from app.smoothing import averaging_yourchoice, gaussian_yourchoice
 from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero
+from app.first_order_filter import first_order_filter
 
 DROPZONE = Dropzone(app)
 # Uploads settings
@@ -24,7 +25,8 @@ FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice,
                      'laplacian_pos_zero': pos_zero,
                      'laplacian_pos_nonzero': pos_nonzero,
                      'laplacian_neg_zero': neg_zero,
-                     'laplacian_neg_nonzero': neg_nonzero}
+                     'laplacian_neg_nonzero': neg_nonzero,
+                     'first_order_deriv': first_order_filter}
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -88,7 +90,10 @@ def process_image():
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
 
-    output = FILTER_DISPATCHER[selected_filter](img, mask_size)
+    if selected_filter in ['first_order_deriv']:
+        output = FILTER_DISPATCHER[selected_filter](img, mask_size, threshold)
+    else:
+        output = FILTER_DISPATCHER[selected_filter](img, mask_size)
     # print(output)
     # prep the filtered image to be sent back as the response
     # retval, buffer = cv2.imencode('.jpg', output[0])
