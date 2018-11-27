@@ -9,7 +9,8 @@ from flask import render_template, redirect, url_for, request, session, make_res
 from flask_dropzone import Dropzone
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from app import app
-from app.smoothing import averaging_yourchoice
+from app.smoothing import averaging_yourchoice, gaussian_yourchoice
+from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero
 
 DROPZONE = Dropzone(app)
 # Uploads settings
@@ -18,7 +19,12 @@ PHOTOS = UploadSet('photos', IMAGES)
 configure_uploads(app, PHOTOS)
 patch_request_class(app)  # set maximum file size, default is 16MB
 
-FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice}
+FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice,
+                     'guass_smoothing': gaussian_yourchoice,
+                     'laplacian_pos_zero': pos_zero,
+                     'laplacian_pos_nonzero': pos_nonzero,
+                     'laplacian_neg_zero': neg_zero,
+                     'laplacian_neg_nonzero': neg_nonzero}
 
 
 @app.route('/', methods=['POST', 'GET'])
