@@ -25,7 +25,9 @@ $(function() {
         if($(this).val() === 'unsharp_mask'){
             $('#k_value_row').show();
             $('#threshold_row').show();
-        } else {
+        } else if ($(this).val() === 'first_order_deriv') {
+            $('#threshold_row').show();
+        }else {
             $('#k_value_row').hide();
             $('#threshold_row').hide();
         }
