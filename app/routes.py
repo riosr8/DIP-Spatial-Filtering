@@ -1,6 +1,7 @@
 """
 This module handles the routes for the Flask application.
 """
+import time
 import os
 import ntpath
 import base64
@@ -89,14 +90,19 @@ def process_image():
     threshold = request.form['threshold'] #verify if float or int
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
-
+    
+    t0 = time.time()
     if selected_filter in ['first_order_deriv']:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size, threshold)
     else:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size)
+    t1 = time.time()
+    total = t1-t0
     # print(output)
     # prep the filtered image to be sent back as the response
     # retval, buffer = cv2.imencode('.jpg', output[0])
+    print('DONE!!!!!')
+    print(total)
     retval, buffer = cv2.imencode('.jpg', output)
     png_as_text = base64.b64encode(buffer)
     response = make_response(png_as_text)
