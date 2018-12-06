@@ -3,7 +3,7 @@ import numpy as np
 from app.smoothing import gaussian_yourchoice
 
 
-def unsharp_mask(image, k, filter_size, threshold=0):
+def unsharp_mask(image, filter_size, k, threshold=0):
     m = len(image)
     n = len(image[0])
     final_image = np.zeros((m, n), dtype=int)
