@@ -13,7 +13,7 @@ from app import app
 from app.smoothing import averaging_yourchoice, gaussian_yourchoice
 from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero
 from app.first_order_filter import first_order_filter
-from app.unsharp_mask.py import unsharp_mask #**
+from app.unsharp_mask import unsharp_mask #**
 
 DROPZONE = Dropzone(app)
 # Uploads settings
