@@ -1,5 +1,5 @@
 $(function () {
-    $('button').click(function () {
+    $('button#apply').click(function () {
         $.ajax({
             url: '/processImage',
             data: $('form').serialize(),
@@ -11,6 +11,7 @@ $(function () {
                 $('#current_kvalue').text('k-Value: ' + $('#k_value').val());
                 $('#current_threshold').text('threshold: ' + $('#threshold').val());
                 $('#filtered_img_res').attr('src', `data:image/jpg;base64,${response}`);
+                $('#img-download').attr('href', `data:image/jpg;base64,${response}`);
             },
             error: function (error) {
                 console.log(error);
