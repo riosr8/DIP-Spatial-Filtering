@@ -1,11 +1,15 @@
 $(function () {
     $('button#apply').click(function () {
+        $('img#filtered_img_res').css('opacity', '0.1');
+        $('div#img_spinner').addClass('spinner')
         $.ajax({
             url: '/processImage',
             data: $('form').serialize(),
             type: 'POST',
             success: function (response) {
                 console.log(response);
+                $('img#filtered_img_res').css('opacity', '1');
+                $('div#img_spinner').removeClass('spinner')
                 $('#current_filter').text('Currently selected filter: ' +  $( "select#filters option:checked" ).val());
                 $('#current_mask').text('Mask size: ' + $('#mask_size').val() + 'x' + $('#mask_size').val());
                 $('#current_kvalue').text('k-Value: ' + $('#k_value').val());
