@@ -29,7 +29,7 @@ FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice,
                      'laplacian_neg_zero': neg_zero,
                      'laplacian_neg_nonzero': neg_nonzero,
                      'first_order_deriv': first_order_filter,
-                     'unsharp_mask_filter': unsharp_mask} #**
+                     'unsharp_mask': unsharp_mask} #**
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -96,6 +96,8 @@ def process_image():
     t0 = time.time()
     if selected_filter in ['first_order_deriv']:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size, threshold)
+    elif selected_filter in ['unsharp_mask']:
+        output = FILTER_DISPATCHER[selected_filter](img, mask_size, k_value, threshold)
     else:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size)
     t1 = time.time()
