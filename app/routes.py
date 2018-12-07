@@ -88,8 +88,8 @@ def process_image():
     print(request.form)
     selected_filter = request.form['filters']
     mask_size = int(request.form['mask_size'])
-    k_value = request.form['k_value']  #verify if float or int
-    threshold = request.form['threshold'] #verify if float or int
+    k_value = float(request.form['k_value'])  #verify if float or int
+    threshold = int(request.form['threshold']) #verify if float or int
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
     
