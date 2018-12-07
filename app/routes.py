@@ -86,13 +86,12 @@ def process_image():
     Handle ajax request to filter an image.
     """
     print(request.form)
-    selected_filter = request.form['filters']
-    mask_size = int(request.form['mask_size'])
-    k_value = float(request.form['k_value'])  #verify if float or int
-    threshold = int(request.form['threshold']) #verify if float or int
+    selected_filter = request.form.get('filters', 'avg_smoothing')
+    mask_size = int(request.form.get('mask_size', 3))
+    k_value = float(request.form.get('k_value', 1.0))
+    threshold = int(request.form.get('threshold', 1))
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
-    
     t0 = time.time()
     if selected_filter in ['first_order_deriv']:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size, threshold)
