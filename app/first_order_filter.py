@@ -1,100 +1,78 @@
 from math import sqrt
 import numpy
 
-def first_order_filter(image, size, threshold =0, sobel=False, second=False):
+def prewitt_filter(image, size):
     row = len(image)
     col = len(image[0])
-    FODh = [0] * row  # Matrix containing all horizontal edges
-    FODv = [0] * row  # Matrix containing all vertical edges
-    FOD = [0] * row
-    for a in range(0, row):
-        FODh[a] = [0] * col
-        FODv[a] = [0] * col
-        FOD[a] = [0] * col
+    FOD = [0]*row
+    for i in range(0,row):
+        FOD[i] = [0]*col
     pad = int(size / 2)
-    if not second:
-        for i in range(0 + pad, row - pad):
-            for j in range(0 + pad, col - pad):
-                sumV = 0.0
-                sumH = 0.0
-                for x in range(0, size):
-                    for y in range(0, size):
-                        if not sobel:
-                            weightH = 1
-                            weightV = 1
-                        else:
-                            weightH = size - pad - (abs(pad - x))+abs(pad - y)-1
-                            weightV = size - pad - (abs(pad - y))+abs(pad - x)-1
-                        if x < pad:
-                            weightV = weightV * -1
-                        if y < pad:
-                            weightH = weightH * -1
-                        if y != pad:
-                            sumH += weightH * image[i + y - pad][j + x - pad]
-                        if x != pad:
-                            sumV += weightV * image[i + y - pad][j + x - pad]
-                sumH = min(255.0, abs(sumH))
-                sumV = min(255.0, abs(sumV))
-                FODh[i][j] = sumH
-                FODv[i][j] = sumV
-                if sobel:
-                    temp = min(255.0, sqrt(FODh[i][j]*FODh[i][j] + FODv[i][j]*FODv[i][j]))
-                    if temp >= threshold:
-                        FOD[i][j] = temp
-                    else:
-                        FOD[i][j] = 0
-                else:
-                    FOD[i][j] = (FODh[i][j] + FODv[i][j]) / 2
-    else:
-        for i in range(0 + pad, row - pad):
-            for j in range(0 + pad, col - pad):
-                sumV = 0.0
-                sumH = 0.0
-                for x in range(0, size):
-                    for y in range(0, size):
-                        minusH = False
-                        minusV = False
-                        if x < pad:
-                            minusV = True
-                        if y < pad:
-                            minusH = True
-                        if y != pad:
-                            if minusH:
-                                sumH -= image[i + y - pad][j + x - pad]
-                            else:
-                                sumH += image[i + y - pad][j + x - pad]
-                        if x != pad:
-                            if minusV:
-                                sumV -= image[i + y - pad][j + x - pad]
-                            else:
-                                sumV += image[i + y - pad][j + x - pad]
-                FODh[i][j] = sumH
-                FODv[i][j] = sumV
-                FOD[i][j] = (FODh[i][j], FODv[i][j])
+    for i in range(0 + pad, row - pad):
+        for j in range(0 + pad, col - pad):
+            sumV = 0.0
+            sumH = 0.0
+            for x in range(0, size):
+                for y in range(0, size):
+                    if not sobel:
+                        weightH = 1
+                        weightV = 1
+                    if y < pad:
+                        sumH -= image[i + y - pad][j + x - pad]
+                    elif y > pad:
+                        sumH += image[i + y - pad][j + x - pad]
+                    if x < pad:
+                        sumV -= image[i + y - pad][j + x - pad]
+                    elif x > pad:
+                        sumV += image[i + y - pad][j + x - pad]
+            sumH = min(255.0, abs(sumH))
+            sumV = min(255.0, abs(sumV))
+            FOD[i][j] = max(sumH, sumV, image[i][j])
+            # Enable for fliter output
+            # FOD[i][j] = max(sumH, sumV) 
     return numpy.asarray(FOD, numpy.uint8)
 
-def second_order_filter(image, size, threshold):
+def sobel_filter(image, size, threshold =0):
     row = len(image)
     col = len(image[0])
-    SOD = [0] * row
-    SODh = [0] * row
-    SODv = [0] * row
-    SODf = [0] * row
-    for a in range(0, row):
-        SOD[a] = [0] * col
-        SODh[a] = [0] * col
-        SODv[a] = [0] * col
-        SODf = [0] * row
-    SOD = Filter.first_order_filter(self, image, size, True)
-    SOD = Filter.first_order_filter(self, SOD, size, True)
-    pad = int(size/2)
-    for i in range(1, row - 1):
-        for j in range(1, col - 1):
-            if (SOD[i-1][j] > 0 and SOD[i+1][j] < 0) or (SOD[i-1][j] < 0 and SOD[i+1][j] > 0): # Zero crossing
-                if abs(SOD[i-1][j] - SOD[i+1][j]) > threshold:
-                    SODh[i][j] = 255
-            if (SOD[i][j-1] > 0 and SOD[i][j+1] < 0) or (SOD[i][j-1] < 0 and SOD[i][j+1] > 0): # Zero crossing
-                if abs(SOD[i][j-1] - SOD[i][j+1]) > threshold:
-                    SODv[i][j] = 255
-            SODf = max(SODv[i][j], SODh[i][j])
-    return SODf
+    #FOD = image.copy()
+    FOD = [0]*row
+    for i in range(0,row):
+        FOD[i] = [0]*col
+    pad = int(size / 2)
+    maxS = 0
+    minS = 100000
+    for i in range(0 + pad, row - pad):
+        for j in range(0 + pad, col - pad):
+            sumV = 0.0
+            sumH = 0.0
+            for x in range(0, size):
+                for y in range(0, size):
+                    weightH = size - pad - (abs(pad - x))+abs(pad - y)-1
+                    weightV = size - pad - (abs(pad - y))+abs(pad - x)-1
+                    if x == pad:
+                        weightH = weightH * min(1, (pad - abs(pad - y)))
+                    if y == pad:
+                        weightV = weightV * min(1, (pad - abs(pad - x)))
+                    if x < pad:
+                        weightV = weightV * -1
+                    if y < pad:
+                        weightH = weightH * -1
+                    if y != pad:
+                        sumH += weightH * image[i + y - pad][j + x - pad]
+                    if x != pad:
+                        sumV += weightV * image[i + y - pad][j + x - pad]
+            sumH = min(255.0, abs(sumH))
+            sumV = min(255.0, abs(sumV))
+            temp = sqrt(sumH * sumH + sumV * sumV)
+            minS = min(minS, temp)
+            maxS = max(maxS, temp)
+            FOD[i][j] = temp
+    for i in range(0 + pad, row - pad):
+        for j in range(0 + pad, col - pad):
+            FOD[i][j] = (FOD[i][j] - minS)/(maxS - minS)*255.0
+            if FOD[i][j] >= threshold:
+                FOD[i][j] = min(255, (FOD[i][j] + image[i][j]) / 2)
+            else:
+                FOD[i][j] = image[i][j]
+    return numpy.asarray(FOD, numpy.uint8)
