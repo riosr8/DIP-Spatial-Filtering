@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     {% block head %}
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        {% if title %}
-            <title>{{ title }} - DIP</title>
-        {% else %}
-            <title>Spatial Filtering</title>
-        {% endif %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-              integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-              crossorigin="anonymous">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-                crossorigin="anonymous"></script>
-        <link rel="stylesheet" href="../static/css/navbar.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% if title %}
+    <title>{{ title }} - DIP</title>
+    {% else %}
+    <title>Spatial Filtering</title>
+    {% endif %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+    <link rel="stylesheet" href="../static/css/navbar.css">
     {% endblock %}
 </head>
+
 <body>
 
-{% include 'includes/_navbar.html' %}
-{% with messages = get_flashed_messages() %}
+    {% include 'includes/_navbar.html' %}
+    {% with messages = get_flashed_messages() %}
     {% if messages %}
-        {% for message in messages %}
-            <div class="alert alert-info" role="alert">{{ message }}</div>
-        {% endfor %}
+    {% for message in messages %}
+    <div class="alert alert-info" role="alert">{{ message }}</div>
+    {% endfor %}
     {% endif %}
-{% endwith %}
+    {% endwith %}
 
-{% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 
 
 </body>
+
 </html>
