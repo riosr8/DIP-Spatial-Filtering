@@ -28,6 +28,10 @@ a:hover {
     text-decoration: none
 }
 
+.form-group {
+    padding-right: 0;
+}
+
 .spinner {
     position: absolute;
     left: 50%;
