@@ -28,9 +28,13 @@ a:hover {
     text-decoration: none
 }
 
-.form-group {
-    padding-right: 0;
+.filter_form_input {
+    padding-left: 0;
 }
+
+/* .filter_input_row {
+    padding-left: 7%;
+} */
 
 .spinner {
     position: absolute;

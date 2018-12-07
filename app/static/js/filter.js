@@ -1,23 +1,37 @@
 
 const k_value_row = '<div id="k_value_row" class="row" style="display:none;">' +
-    '<div class="form-group col-xs-3">' +
+    '<div class="row">' +
+    '<div class="col-md-7">' +
+    '<div class="form-group">' +
     '<label for="k_value">Intensity Value (k)</label>' +
+    '<div>' +
+    '<div class="col-md-6 filter_form_input">' +
     '<input name="k_value" type="text" class="form-control" id="k_value" value="1" required>' +
     '</div>' +
-    '<div class="col-xs-3"></div>' +
-    '<div class="col-xs-6">' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '<div class="col-md-5">' +
     '<p id="current_kvalue">No k value set.</p>' +
+    '</div>' +
     '</div>' +
     '</div>';
 
 const threshold_row = '<div id="threshold_row" class="row" style="display:none;">' +
-    '<div class="form-group col-xs-3">' +
+    '<div class="row">' +
+    '<div class="col-md-7">' +
+    '<div class="form-group">' +
     '<label for="threshold">Threshold</label>' +
+    '<div>' +
+    '<div class="col-md-6 filter_form_input">' +
     '<input name="threshold" type="text" class="form-control" id="threshold" value="1" required>' +
     '</div>' +
-    '<div class="col-xs-3"></div>' +
-    '<div class="col-xs-6">' +
+    '</div>' +
+    '</div>' +
+    '</div>' +
+    '<div class="col-md-5">' +
     '<p id="current_threshold">No threshold set.</p>' +
+    '</div>' +
     '</div>' +
     '</div>';
 
@@ -81,8 +95,6 @@ $.validator.setDefaults({
 });
 
 $(document).ready(function () {
-    $('#k_value_row').remove();
-    $('#threshold_row').remove();
     $("#filter_form").validate({
         rules: {
             mask_size: "required",
@@ -113,7 +125,7 @@ $(document).ready(function () {
 
             // Add `has-feedback` class to the parent div.form-group
             // in order to add icons to inputs
-            element.parents(".col-xs-3").addClass("has-feedback");
+            element.parents(".col-md-6").addClass("has-feedback");
 
             if (element.prop("type") === "checkbox") {
                 error.insertAfter(element.parent("label"));
@@ -133,11 +145,11 @@ $(document).ready(function () {
             }
         },
         highlight: function (element, errorClass, validClass) {
-            $(element).parents(".col-xs-3").addClass("has-error").removeClass("has-success");
+            $(element).parents(".col-md-6").addClass("has-error").removeClass("has-success");
             $(element).next("span").addClass("glyphicon-remove").removeClass("glyphicon-ok");
         },
         unhighlight: function (element, errorClass, validClass) {
-            $(element).parents(".col-xs-3").addClass("has-success").removeClass("has-error");
+            $(element).parents(".col-md-6").addClass("has-success").removeClass("has-error");
             $(element).next("span").addClass("glyphicon-ok").removeClass("glyphicon-remove");
         }
     });
