@@ -95,18 +95,16 @@ $.validator.setDefaults({
 });
 
 $.validator.addMethod('check_mask_size_input', function (value, element) {
-    console.log(typeof(value))
     const selected_filter = $('select#filters').val();
     const input = parseInt(value);
     if (isNaN(input)) {
         return false;
     }
-    console.log(input%2)
-    console.log(selected_filter)
-    if (selected_filter !== 'guass_smoothing' && selected_filter !== 'unsharp_mask'){
+
+    if (selected_filter !== 'guass_smoothing' && selected_filter !== 'unsharp_mask') {
         return true;
     } else {
-        if (input%2 === 0){
+        if (input % 2 === 0) {
             return false;
         } else {
             return true;
