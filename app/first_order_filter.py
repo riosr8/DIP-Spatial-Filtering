@@ -14,9 +14,6 @@ def prewitt_filter(image, size):
             sumH = 0.0
             for x in range(0, size):
                 for y in range(0, size):
-                    if not sobel:
-                        weightH = 1
-                        weightV = 1
                     if y < pad:
                         sumH -= image[i + y - pad][j + x - pad]
                     elif y > pad:
