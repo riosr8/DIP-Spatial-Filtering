@@ -12,7 +12,8 @@ from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_cl
 from app import app
 from app.smoothing import averaging_yourchoice, gaussian_yourchoice
 from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero
-from app.first_order_filter import first_order_filter
+# from app.first_order_filter import prewitt_filter, sobel_filter
+from app.first_order_filter import prewitt_filter, sobel_filter
 from app.unsharp_mask import unsharp_mask #**
 
 DROPZONE = Dropzone(app)
@@ -28,7 +29,8 @@ FILTER_DISPATCHER = {'avg_smoothing': averaging_yourchoice,
                      'laplacian_pos_nonzero': pos_nonzero,
                      'laplacian_neg_zero': neg_zero,
                      'laplacian_neg_nonzero': neg_nonzero,
-                     'first_order_deriv': first_order_filter,
+                     'first_order_prewitt': prewitt_filter,
+                     'first_order_sobel': sobel_filter,
                      'unsharp_mask': unsharp_mask} #**
 
 
@@ -93,7 +95,7 @@ def process_image():
     img_to_filter = ntpath.basename(request.form['original'])
     img = cv2.imread(os.getcwd() + '/uploads/' + img_to_filter, 0)
     t0 = time.time()
-    if selected_filter in ['first_order_deriv']:
+    if selected_filter in ['first_order_sobel']:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size, threshold)
     elif selected_filter in ['unsharp_mask']:
         output = FILTER_DISPATCHER[selected_filter](img, mask_size, k_value, threshold)

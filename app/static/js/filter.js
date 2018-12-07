@@ -55,7 +55,7 @@ $(function () {
             $('#k_value_row').show();
             $(threshold_row).insertAfter($('#k_value_row'));
             $('#threshold_row').show();
-        } else if ($(this).val() === 'first_order_deriv') {
+        } else if ($(this).val() === 'first_order_sobel') {
             remove_existing_fields();
             $(threshold_row).insertAfter($('#mask_row'));
             $('#threshold_row').show();
@@ -77,7 +77,7 @@ $.validator.setDefaults({
             data: $('form').serialize(),
             type: 'POST',
             success: function (response) {
-                console.log(response);
+                // console.log(response);
                 $('img#filtered_img_res').css('opacity', '1');
                 $('div#img_spinner').removeClass('spinner')
                 $('#current_filter').text('Currently selected filter: ' + $("select#filters option:checked").val());
