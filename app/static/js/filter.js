@@ -94,10 +94,33 @@ $.validator.setDefaults({
     }
 });
 
+$.validator.addMethod('check_mask_size_input', function (value, element) {
+    console.log(typeof(value))
+    const selected_filter = $('select#filters').val();
+    const input = parseInt(value);
+    if (isNaN(input)) {
+        return false;
+    }
+    console.log(input%2)
+    console.log(selected_filter)
+    if (selected_filter !== 'guass_smoothing' && selected_filter !== 'unsharp_mask'){
+        return true;
+    } else {
+        if (input%2 === 0){
+            return false;
+        } else {
+            return true;
+        }
+    }
+}, 'Input for your selected filter must be an odd integer.');
+
 $(document).ready(function () {
     $("#filter_form").validate({
         rules: {
-            mask_size: "required",
+            mask_size: {
+                required: true,
+                check_mask_size_input: true
+            },
             k_value: {
                 required: true,
                 range: [1, 10]
@@ -108,14 +131,17 @@ $(document).ready(function () {
             }
         },
         messages: {
-            mask_size: 'Please enter an integer for mask size.',
+            mask_size: {
+                required: 'Please enter an integer for mask size.',
+                check_mask_size_input: 'Input for your selected filter must be an odd integer.'
+            },
             k_value: {
                 required: 'Please enter an intensity value, k.',
                 range: 'The k value must be in the range 1-10'
             },
             threshold: {
                 required: "Please enter a threshold.",
-                minlength: "The threshold must be in the range 0-10."
+                range: "The threshold must be in the range 0-10."
             }
         },
         errorElement: "em",
