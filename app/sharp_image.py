@@ -47,6 +47,7 @@ def convolution(image, mask):
     new_img = np.zeros((w, h))
     for x in range(0, h):
         for y in range(0, w):
+             # multiplying mask values with the image matrix of filter size and the summation is stored at (y,x)
             new_img[y, x] = (flip_mask * image_pad[y: y + w1, x: x + h1]).sum()
 
     return new_img
