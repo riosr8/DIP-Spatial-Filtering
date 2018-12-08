@@ -35,6 +35,14 @@ const threshold_row = '<div id="threshold_row" class="row" style="display:none;"
     '</div>' +
     '</div>';
 
+const filters_with_odd_masks = ['guass_smoothing',
+                                'unsharp_mask',
+                                'laplacian_pos_zero',
+                                'laplacian_pos_nonzero',
+                                'laplacian_neg_zero',
+                                'laplacian_neg_nonzero'
+                                ];
+
 function remove_existing_fields() {
     if ($('#k_value_row').length) {
         $('#k_value_row').remove();
@@ -101,14 +109,18 @@ $.validator.addMethod('check_mask_size_input', function (value, element) {
         return false;
     }
 
-    if (selected_filter !== 'guass_smoothing' && selected_filter !== 'unsharp_mask') {
-        return true;
-    } else {
+    if (input < 2) {
+        return false;
+    }
+
+    if (filters_with_odd_masks.includes(selected_filter)) {
         if (input % 2 === 0) {
             return false;
         } else {
             return true;
         }
+    } else {
+        return true;
     }
 }, 'Input for your selected filter must be an odd integer.');
 
@@ -131,7 +143,7 @@ $(document).ready(function () {
         messages: {
             mask_size: {
                 required: 'Please enter an integer for mask size.',
-                check_mask_size_input: 'Input for your selected filter must be an odd integer.'
+                check_mask_size_input: 'Input for your selected filter must be an odd integer or >= 2.'
             },
             k_value: {
                 required: 'Please enter an intensity value, k.',
