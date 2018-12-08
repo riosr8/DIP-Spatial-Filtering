@@ -51,3 +51,12 @@ def convolution(image, mask):
             new_img[y, x] = (flip_mask * image_pad[y: y + w1, x: x + h1]).sum()
 
     return new_img
+
+
+def hist_equalization(image):
+    info = image.copy().flatten()
+    hist, div = np.histogram(info, 256, density=True)
+    cum_dist = hist.cumsum()
+    cum_dist = 255*cum_dist/cum_dist[-1]
+    eq_newimg = np.interp(info, div[:-1], cum_dist)
+    return eq_newimg.reshape(image.shape)
