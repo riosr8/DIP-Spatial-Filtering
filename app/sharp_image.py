@@ -1,7 +1,7 @@
 import numpy as np
 import cv2
 
-def pos_zero(image, filter_size):
+def neg_zero(image, filter_size):
     filter_size = 3
     if filter_size == 3:
         mask = np.array([[0, -1, 0], [-1, 4, -1], [0, -1, 0]])
@@ -10,7 +10,7 @@ def pos_zero(image, filter_size):
     return sharp_image
 
 
-def pos_nonzero(image, filter_size):
+def neg_nonzero(image, filter_size):
     filter_size = 3
     if filter_size == 3:
         mask = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
@@ -19,7 +19,7 @@ def pos_nonzero(image, filter_size):
     return sharp_image
 
 
-def neg_zero(image, filter_size):
+def pos_zero(image, filter_size):
     filter_size = 3
     if filter_size == 3:
         mask = np.array([[0, 1, 0], [1, -4, 1], [0, 1, 0]])
@@ -28,7 +28,7 @@ def neg_zero(image, filter_size):
     return sharp_image
 
 
-def neg_nonzero(image, filter_size):
+def pos_nonzero(image, filter_size):
     filter_size = 3
     if filter_size == 3:
         mask = np.array([[1, 1, 1], [1, -8, 1], [1, 1, 1]])
