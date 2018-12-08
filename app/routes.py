@@ -11,7 +11,7 @@ from flask_dropzone import Dropzone
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
 from app import app
 from app.smoothing import averaging_yourchoice, gaussian_yourchoice
-from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero, hist_equalization
+from app.sharp_image import pos_zero, pos_nonzero, neg_zero, neg_nonzero
 # from app.first_order_filter import prewitt_filter, sobel_filter
 from app.first_order_filter import prewitt_filter, sobel_filter
 from app.unsharp_mask import unsharp_mask #**

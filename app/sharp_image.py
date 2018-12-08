@@ -7,6 +7,7 @@ def neg_zero(image, filter_size):
         mask = np.array([[0, -1, 0], [-1, 4, -1], [0, -1, 0]])
         sharp_image = convolution(image, mask)
         sharp_image = image + sharp_image
+        sharp_image = hist_equalization(sharp_image)
     return sharp_image
 
 
@@ -16,6 +17,7 @@ def neg_nonzero(image, filter_size):
         mask = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
         sharp_image = convolution(image, mask)
         sharp_image = image + sharp_image
+        sharp_image = hist_equalization(sharp_image)
     return sharp_image
 
 
@@ -25,6 +27,7 @@ def pos_zero(image, filter_size):
         mask = np.array([[0, 1, 0], [1, -4, 1], [0, 1, 0]])
         sharp_image = convolution(image, mask)
         sharp_image = image - sharp_image
+        sharp_image = hist_equalization(sharp_image)
     return sharp_image
 
 
@@ -34,6 +37,7 @@ def pos_nonzero(image, filter_size):
         mask = np.array([[1, 1, 1], [1, -8, 1], [1, 1, 1]])
         sharp_image = convolution(image, mask)
         sharp_image = image - sharp_image
+        sharp_image = hist_equalization(sharp_image)
     return sharp_image
 
 
