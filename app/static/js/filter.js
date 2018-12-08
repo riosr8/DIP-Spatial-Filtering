@@ -137,7 +137,7 @@ $(document).ready(function () {
             },
             threshold: {
                 required: true,
-                range: [0, 10]
+                range: [0, 255]
             }
         },
         messages: {
@@ -151,7 +151,7 @@ $(document).ready(function () {
             },
             threshold: {
                 required: "Please enter a threshold.",
-                range: "The threshold must be in the range 0-10."
+                range: "The threshold must be in the range 0-255."
             }
         },
         errorElement: "em",
